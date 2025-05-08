@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "src/main.ts"
+      ],
+      "name": "development",
+      "outputCapture": "std",
+
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "npm", // ou node
+      "runtimeArgs": [
+        "run",
+        "start:debug"
+      ],
+      "restart": true,
+      "outFiles": [
+        "${workspaceFolder}/server/dist/**/*.js"
+      ],
+      // "console": "integratedTerminal",
+      "sourceMaps": true
+    }
+  ]
+}

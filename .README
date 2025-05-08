@@ -1,0 +1,6 @@
+
+renommer la base dans .env 
+
+npm i 
+
+npx prisma migrate dev --name init
