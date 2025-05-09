@@ -11,7 +11,7 @@
       "outputCapture": "std",
 
       "cwd": "${workspaceFolder}/server",
-      "runtimeExecutable": "npm", // ou node
+      "runtimeExecutable": "pnpm", // ou node
       "runtimeArgs": [
         "run",
         "start:debug"

@@ -5,5 +5,5 @@ export class RoleDto {
   id: number;
 
   @IsString()
-  name: string;
+  name: RoleName;
 }

@@ -1,7 +1,7 @@
 import { Controller, Post, Body, NotFoundException, Headers, UnauthorizedException, HttpCode } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
-import { LoginUserDto } from '../users/dto/users.dto';
+import { LoginUserDto } from '../users/dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
