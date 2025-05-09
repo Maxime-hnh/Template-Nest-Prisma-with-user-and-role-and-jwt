@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from '../users/users.service';
-import { UserDto } from '../users/dto';
+import { UserWithRole } from '../users/users.types';
+import { AuthDto } from './dto/auth.dto';
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class AuthService {
   ) { }
 
 
-  async login(user: UserDto) {
+  async login(user: UserWithRole): Promise<AuthDto> {
     const payload = { id: user.id, email: user.email, role: user.role.name };
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
@@ -42,16 +43,16 @@ export class AuthService {
     };
   }
 
-  async refreshToken(oldRefreshToken: string) {
-      const decoded = this.jwtService.verify(oldRefreshToken, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      });
+  async refreshToken(oldRefreshToken: string): Promise<AuthDto | void> {
+    const decoded = this.jwtService.verify(oldRefreshToken, {
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+    });
 
-      const user = await this.usersService.findById(decoded.id)
+    const user = await this.usersService.findById(decoded.id)
 
-      if (!user || user.refreshToken !== oldRefreshToken) {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
-      return this.login(user);
+    if (!user || user.refreshToken !== oldRefreshToken) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+    return this.login(user);
   }
 }
